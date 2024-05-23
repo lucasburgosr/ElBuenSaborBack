@@ -1,6 +1,8 @@
 package com.example.buensaborback.domain.dtos;
 
 import com.example.buensaborback.domain.entities.*;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
 
 import java.util.HashSet;
@@ -10,6 +12,15 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = ArticuloInsumoDto.class, name = "insumo"),
+        @JsonSubTypes.Type(value = ArticuloManufacturadoDto.class, name = "manufacturado")
+})
 public abstract class ArticuloDto extends BaseDto{
 
     protected String denominacion;
