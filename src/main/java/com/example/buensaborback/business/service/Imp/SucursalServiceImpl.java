@@ -6,6 +6,8 @@ import com.example.buensaborback.domain.entities.Sucursal;
 import com.example.buensaborback.repositories.SucursalRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service("sucursalServiceImpl")
 public class SucursalServiceImpl extends BaseServiceImpl<Sucursal, Long> implements SucursalService {
@@ -24,5 +26,10 @@ public class SucursalServiceImpl extends BaseServiceImpl<Sucursal, Long> impleme
     @Override
     public Sucursal actualizarSucursal(Long id, Sucursal sucursal) {
         return sucursalRepository.save(sucursal);
+    }
+
+    @Override
+    public List<Sucursal> obtenerSucursalesPorIdEmpresa(Long idEmpresa) {
+        return sucursalRepository.findAllByEmpresaId(idEmpresa);
     }
 }
