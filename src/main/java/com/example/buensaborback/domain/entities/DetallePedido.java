@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 
 @NoArgsConstructor
@@ -13,6 +14,7 @@ import lombok.*;
 @Entity
 @ToString
 @Builder
+@Audited
 public class DetallePedido extends Base{
 
     private Integer cantidad;

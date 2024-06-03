@@ -3,6 +3,8 @@ package com.example.buensaborback.domain.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -17,6 +19,7 @@ import java.util.List;
 @ToString
 @Entity
 @SuperBuilder
+@Audited
 public class ArticuloManufacturado extends Articulo {
 
     private String descripcion;
@@ -29,6 +32,7 @@ public class ArticuloManufacturado extends Articulo {
     private Double precioCosto;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "imagenes_id")
+    @NotAudited
     protected List<ImagenArticulo> imagenesManufacturado;
 
     @OneToMany(mappedBy = "articuloManufacturado", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)

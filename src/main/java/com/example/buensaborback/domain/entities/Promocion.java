@@ -4,6 +4,8 @@ import com.example.buensaborback.domain.enums.TipoPromocion;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,6 +19,7 @@ import java.util.Set;
 @Entity
 @ToString
 @Builder
+@Audited
 public class Promocion extends Base {
 
     private String denominacion;
@@ -30,6 +33,7 @@ public class Promocion extends Base {
 
     @OneToMany(mappedBy = "promocion", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
+    @NotAudited
     private Set<ImagenPromocion> imagenes = new HashSet<>();
 
     @ManyToMany(mappedBy = "promociones")

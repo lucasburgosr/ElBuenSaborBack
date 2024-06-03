@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -18,6 +20,7 @@ import java.util.Set;
 @Entity
 @ToString
 @SuperBuilder
+@Audited
 public class Cliente extends Base {
 
     private Rol rol;
@@ -47,5 +50,6 @@ public class Cliente extends Base {
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "imagen_id")
+    @NotAudited
     private ImagenCliente imagen;
 }

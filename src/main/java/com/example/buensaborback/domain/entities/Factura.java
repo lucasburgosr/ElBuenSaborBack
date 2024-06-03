@@ -3,6 +3,7 @@ package com.example.buensaborback.domain.entities;
 import com.example.buensaborback.domain.enums.FormaPago;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import java.time.LocalDate;
 
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Entity
 @ToString
 @Builder
+@Audited
 public class Factura extends Base{
 
     private LocalDate fechaFacturacion;

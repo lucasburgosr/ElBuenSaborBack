@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToOne;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,6 +13,7 @@ import lombok.*;
 @Entity
 @ToString
 @Builder
+@Audited
 public class UsuarioEmpleado extends Base{
 
     private String auth0Id;

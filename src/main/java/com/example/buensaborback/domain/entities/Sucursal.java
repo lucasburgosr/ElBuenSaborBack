@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.Set;
 @Entity
 @ToString
 @Builder
+@Audited
 public class Sucursal extends Base{
 
     private String nombre;

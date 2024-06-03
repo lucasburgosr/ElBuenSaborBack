@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +28,7 @@ import java.util.Set;
         @JsonSubTypes.Type(value = ArticuloInsumo.class, name = "insumo"),
         @JsonSubTypes.Type(value = ArticuloManufacturado.class, name = "manufacturado")
 })
+@Audited
 public abstract class Articulo extends Base {
 
     protected String denominacion;
@@ -33,6 +36,7 @@ public abstract class Articulo extends Base {
 
     @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @Builder.Default
+    @NotAudited
     protected Set<ImagenArticulo> imagenes = new HashSet<>();
 
     @ManyToOne

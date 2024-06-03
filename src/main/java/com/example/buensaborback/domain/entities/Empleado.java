@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -17,6 +19,7 @@ import java.util.Set;
 @Entity
 @ToString
 @SuperBuilder
+@Audited
 public class Empleado extends Base {
 
     private Rol rol;
@@ -45,6 +48,7 @@ public class Empleado extends Base {
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "imagen_id")
+    @NotAudited
     private ImagenEmpleado imagen;
 
     @ManyToOne

@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.envers.Audited;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @ToString
 @Entity
 @SuperBuilder
+@Audited
 public class ArticuloInsumo extends Articulo {
     
     private Double precioCompra;

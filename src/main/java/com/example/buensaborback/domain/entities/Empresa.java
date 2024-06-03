@@ -3,6 +3,8 @@ package com.example.buensaborback.domain.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +16,7 @@ import java.util.Set;
 @Entity
 @ToString
 @Builder
+@Audited
 public class Empresa extends Base{
 
     private String nombre;
@@ -27,6 +30,7 @@ public class Empresa extends Base{
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "imagen_id")
+    @NotAudited
     protected ImagenEmpresa imagen;
 
 }
