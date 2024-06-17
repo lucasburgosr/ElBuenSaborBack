@@ -13,5 +13,6 @@ import lombok.Setter;
 public class UsuarioEmpleadoDto extends BaseDto{
     private String auth0Id;
     private String username;
+    private String email;
     private Empleado empleado;
 }
