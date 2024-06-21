@@ -24,17 +24,17 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-    @Value("${auth0.audience}")
-    private String audience;
 
-    @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
-    private String issuer;
+    private final String audience = "http://elbuensaborapi";
 
-    @Value("${web.cors.allowed-origins}")
-    private String corsAllowedOrigins;
 
-    @Value("${spring.websecurity.debug:false}")
-    boolean webSecurityDebug;
+    private final String issuer = "https://dev-ivcgfpif76bc7frn.us.auth0.com/";
+
+
+    private final String corsAllowedOrigins = "http://localhost:5173";
+
+
+    boolean webSecurityDebug = true;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
