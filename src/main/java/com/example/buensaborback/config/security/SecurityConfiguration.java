@@ -1,6 +1,6 @@
 package com.example.buensaborback.config.security;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -12,11 +12,14 @@ import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import java.util.Arrays;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -24,28 +27,24 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-
     private final String audience = "http://elbuensaborapi";
-
-
     private final String issuer = "https://dev-ivcgfpif76bc7frn.us.auth0.com/";
-
-
     private final String corsAllowedOrigins = "http://localhost:5173";
-
-
     boolean webSecurityDebug = true;
+
+    @Autowired
+    private JwtLoggingFilter jwtLoggingFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf((csrf) -> csrf.disable())
-                .cors(withDefaults()) //por defecto spring va a buscar un bean con el nombre "corsConfigurationSource".
+                .csrf(csrf -> csrf.disable())
+                .cors(withDefaults())
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/api/empresas").permitAll()
                                 .anyRequest().permitAll()
                 )
+
                 .oauth2ResourceServer(oauth2ResourceServer ->
                         oauth2ResourceServer
                                 .jwt(jwt ->
@@ -54,6 +53,7 @@ public class SecurityConfiguration {
                                                 .jwtAuthenticationConverter(jwtAuthenticationConverter())
                                 )
                 );
+                http.addFilterBefore(jwtLoggingFilter, BearerTokenAuthenticationFilter.class);
         return http.build();
     }
 
@@ -74,13 +74,10 @@ public class SecurityConfiguration {
     @Bean
     JwtDecoder jwtDecoder() {
         NimbusJwtDecoder jwtDecoder = JwtDecoders.fromOidcIssuerLocation(issuer);
-
         OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(audience);
         OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuer);
         OAuth2TokenValidator<Jwt> withAudience = new DelegatingOAuth2TokenValidator<>(withIssuer, audienceValidator);
-
         jwtDecoder.setJwtValidator(withAudience);
-
         return jwtDecoder;
     }
 
@@ -88,8 +85,7 @@ public class SecurityConfiguration {
     JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
         converter.setAuthoritiesClaimName("http://elbuensaborapi/roles");
-        converter.setAuthorityPrefix("");
-
+        converter.setAuthorityPrefix("ROLE_");
         JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
         jwtConverter.setJwtGrantedAuthoritiesConverter(converter);
         return jwtConverter;
@@ -99,5 +95,4 @@ public class SecurityConfiguration {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.debug(webSecurityDebug);
     }
-
 }

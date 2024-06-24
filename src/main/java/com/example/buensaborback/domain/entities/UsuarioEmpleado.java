@@ -19,8 +19,6 @@ public class UsuarioEmpleado extends Base{
 
     private String auth0Id;
     private String username;
-    private String email;
-    private Rol rol;
 
     @OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY)
     private Empleado empleado;

@@ -22,23 +22,18 @@ import java.util.Set;
 @Audited
 public class Empleado extends Base {
 
-    private Rol rol;
-
     @OneToMany(mappedBy = "empleado", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @ToString.Exclude
     @Builder.Default
     @JsonBackReference(value = "empleado_pedidos")
     private Set<Pedido> pedidos = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "domicilio_id")
-    private Domicilio domicilio;
-
     private String nombre;
     private String apellido;
     private String telefono;
     private String email;
     private LocalDate fechaNacimiento;
+    private Rol rol;
 
     @OneToOne
     @ToString.Exclude

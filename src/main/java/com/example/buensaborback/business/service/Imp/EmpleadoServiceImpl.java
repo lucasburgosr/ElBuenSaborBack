@@ -15,4 +15,13 @@ public class EmpleadoServiceImpl extends BaseServiceImpl<Empleado, Long> impleme
         super(empleadoRepository);
         this.empleadoRepository = empleadoRepository;
     }
+
+    @Override
+    public Empleado findByEmail(String email) {
+        Empleado empleado = empleadoRepository.findByEmail(email);
+        if (empleado == null) {
+            throw new RuntimeException("Empleado con email " + email + " no encontrado");
+        }
+        return empleado;
+    }
 }

@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -319,77 +320,206 @@ public class BuenSaborBackApplication {
 
 			logger.info("Promocion {}", promocionDiaEnamorados);
 
-			// agregar usuario
-			UsuarioCliente usuario1 = UsuarioCliente.builder().username("pepe-honguito75").auth0Id("iVBORw0KGgoAAAANSUhEUgAAAK0AAACUCAMAAADWBFkUAAABEVBMVEX").build();
-			usuarioClienteRepository.save(usuario1);
-			//Agregar cliente
-			ImagenCliente imagenCliente = ImagenCliente.builder().url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsa2xSPPay4GD7E3cthBMCcvPMADEjFufUWQ&s").build();
+			//Creamos un CAJERO
 
-			Domicilio domicilioCliente1 = Domicilio.builder().calle("Sarmiento").numero(123).cp(5507).localidad(localidad1).build();
-			Domicilio domicilioCliente2 = Domicilio.builder().calle("San martin").numero(412).cp(5501).localidad(localidad2).build();
+			// Crear el UsuarioEmpleado sin establecer la relación con Empleado
+			UsuarioEmpleado usuarioCajero = UsuarioEmpleado.builder()
+					.auth0Id("auth0|66790fc261b261f643a861da")
+					.username("cajero@gmail.com")
+					.build();
 
-			Cliente cliente1 = Cliente.builder().nombre("Alejandro").email("alex@gmail.com").apellido("Lencinas").imagen(imagenCliente).telefono("2634666666").rol(Rol.Cliente).usuario(usuario1).fechaNacimiento(LocalDate.of(1990, 12, 15)).build();
-			cliente1.getDomicilios().add(domicilioCliente1);
-			cliente1.getDomicilios().add(domicilioCliente2);
-			clienteRepository.save(cliente1);
-			logger.info("Cliente {}", cliente1);
+			// Guardar el UsuarioEmpleado primero
+			usuarioCajero = usuarioEmpleadoRepository.save(usuarioCajero);
 
-			//EMPLEADOS
-			UsuarioEmpleado usuarioAdmin = UsuarioEmpleado.builder().username("juancitoAdmin").auth0Id("iVBORw0KGgfsafafehrehregAAAK0AAACUCAMAAADWBFkUAAABEVBMVEX").build();
-			usuarioEmpleadoRepository.save(usuarioAdmin);
-			UsuarioEmpleado usuarioCajero = UsuarioEmpleado.builder().username("juancitoCajero").auth0Id("iVBORw0KGgfsafafehrehregAAAK0AAACUCAMPEPEPEPEOUAAABEVBMVEX").build();
+			// Crear el Empleado sin establecer la relación con UsuarioEmpleado
+			Empleado cajero = Empleado.builder()
+					.pedidos(new HashSet())
+					.nombre("Cajero")
+					.apellido("1")
+					.telefono("2610000000")
+					.email("cajero@gmail.com")
+					.rol(Rol.CAJERO)
+					.fechaNacimiento(LocalDate.now())
+					.imagen(null)
+					.sucursal(sucursalChacras)
+					.build();
+
+			// Guardar el Empleado
+			cajero = empleadoRepository.save(cajero);
+
+			// Establecer las relaciones bidireccionales
+			usuarioCajero.setEmpleado(cajero);
+			cajero.setUsuario(usuarioCajero);
+
+			// Guardar nuevamente las entidades actualizadas
 			usuarioEmpleadoRepository.save(usuarioCajero);
-			UsuarioEmpleado usuarioCocinero = UsuarioEmpleado.builder().username("pepitoCocinero").auth0Id("iVBORw0KGgfsafafehrehregAAAK0AAACUMGKSMKDGMLAKdEEFEX").build();
+			empleadoRepository.save(cajero);
+
+			//Creamos un COCINERO
+
+			// Crear el UsuarioEmpleado sin establecer la relación con Empleado
+			UsuarioEmpleado usuarioCocinero = UsuarioEmpleado.builder()
+					.auth0Id("auth0|667910084dc2a2f7799c05f0")
+					.username("cocinero@gmail.com")
+					.build();
+
+			// Guardar el UsuarioEmpleado primero
+			usuarioCocinero = usuarioEmpleadoRepository.save(usuarioCocinero);
+
+			// Crear el Empleado sin establecer la relación con UsuarioEmpleado
+			Empleado cocinero = Empleado.builder()
+					.pedidos(new HashSet())
+					.nombre("Cocinero")
+					.apellido("1")
+					.telefono("2610000000")
+					.email("cocinero@gmail.com")
+					.rol(Rol.COCINERO)
+					.fechaNacimiento(LocalDate.now())
+					.imagen(null)
+					.sucursal(sucursalChacras)
+					.build();
+
+			// Guardar el Empleado
+			cocinero = empleadoRepository.save(cocinero);
+
+			// Establecer las relaciones bidireccionales
+			usuarioCocinero.setEmpleado(cocinero);
+			cocinero.setUsuario(usuarioCocinero);
+
+			// Guardar nuevamente las entidades actualizadas
 			usuarioEmpleadoRepository.save(usuarioCocinero);
-			UsuarioEmpleado usuarioDelivery = UsuarioEmpleado.builder().username("elJorgeDeliverys").auth0Id("iVBORw0KGgfsafafehrehregAAAK0AAAPAAAMAAADWBFkUAAABEVLEOPX").build();
+			empleadoRepository.save(cocinero);
+
+			//Creamos un ADMINISTRADOR
+
+			// Crear el UsuarioEmpleado sin establecer la relación con Empleado
+			UsuarioEmpleado usuarioAdministrador = UsuarioEmpleado.builder()
+					.auth0Id("auth0|6679104dbe6f781304eac475")
+					.username("administrador@gmail.com")
+					.build();
+
+			// Guardar el UsuarioEmpleado primero
+			usuarioAdministrador = usuarioEmpleadoRepository.save(usuarioAdministrador);
+
+			// Crear el Empleado sin establecer la relación con UsuarioEmpleado
+			Empleado administrador = Empleado.builder()
+					.pedidos(new HashSet())
+					.nombre("Administrador")
+					.apellido("1")
+					.telefono("2610000000")
+					.email("administrador@gmail.com")
+					.rol(Rol.ADMIN)
+					.fechaNacimiento(LocalDate.now())
+					.imagen(null)
+					.sucursal(sucursalChacras)
+					.build();
+
+			// Guardar el Empleado
+			administrador = empleadoRepository.save(administrador);
+
+			// Establecer las relaciones bidireccionales
+			usuarioAdministrador.setEmpleado(administrador);
+			administrador.setUsuario(usuarioAdministrador);
+
+			// Guardar nuevamente las entidades actualizadas
+			usuarioEmpleadoRepository.save(usuarioAdministrador);
+			empleadoRepository.save(administrador);
+
+			//Creamos un DELIVERY
+
+			// Crear el UsuarioEmpleado sin establecer la relación con Empleado
+			UsuarioEmpleado usuarioDelivery = UsuarioEmpleado.builder()
+					.auth0Id("auth0|66791084a2cb38f879d75ccc")
+					.username("delivery@gmail.com")
+					.build();
+
+			// Guardar el UsuarioEmpleado primero
+			usuarioDelivery = usuarioEmpleadoRepository.save(usuarioDelivery);
+
+			// Crear el Empleado sin establecer la relación con UsuarioEmpleado
+			Empleado delivery = Empleado.builder()
+					.pedidos(new HashSet())
+					.nombre("Delivery")
+					.apellido("1")
+					.telefono("2610000000")
+					.email("delivery@gmail.com")
+					.rol(Rol.DELIVERY)
+					.fechaNacimiento(LocalDate.now())
+					.imagen(null)
+					.sucursal(sucursalChacras)
+					.build();
+
+			// Guardar el Empleado
+			delivery = empleadoRepository.save(delivery);
+
+			// Establecer las relaciones bidireccionales
+			usuarioDelivery.setEmpleado(delivery);
+			delivery.setUsuario(usuarioDelivery);
+
+			// Guardar nuevamente las entidades actualizadas
 			usuarioEmpleadoRepository.save(usuarioDelivery);
+			empleadoRepository.save(delivery);
 
-			//Agregar Empleados 4
-			ImagenEmpleado imagenEmpleadoAdmin = ImagenEmpleado.builder().url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsa2xSPPay4GD7E3cthBMCcvPMADEjFufUWQ&s").build();
-			Domicilio domicilioEmpleadoAdmin = Domicilio.builder().calle("Sarmiento").numero(123).cp(5507).localidad(localidad1).build();
-			Empleado empleadoAdmin = Empleado.builder().nombre("Juancito").sucursal(sucursalChacras).rol(Rol.Administrador).domicilio(domicilioEmpleadoAdmin).email("juancitoadmin@gmail.com").apellido("Admincias").imagen(imagenEmpleadoAdmin).telefono("2634666266").usuario(usuarioAdmin).fechaNacimiento(LocalDate.of(1990, 11, 15)).build();
-			empleadoRepository.save(empleadoAdmin);
+			//Creamos un SUPERADMINISTRADOR
 
-			ImagenEmpleado imagenEmpleadoCajero = ImagenEmpleado.builder().url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsa2xSPPay4GD7E3cthBMCcvPMADEjFufUWQ&s").build();
-			Domicilio domicilioEmpleadoCajero = Domicilio.builder().calle("Sarmiento").numero(123).cp(5507).localidad(localidad1).build();
-			Empleado empleadoCajero = Empleado.builder().nombre("Juancito").sucursal(sucursalChacras).rol(Rol.Cajero).domicilio(domicilioEmpleadoCajero).email("juancitocajeres@gmail.com").apellido("Cajeres").imagen(imagenEmpleadoCajero).telefono("263443626").usuario(usuarioCajero).fechaNacimiento(LocalDate.of(1991, 8, 9)).build();
-			empleadoRepository.save(empleadoCajero);
+			// Crear el UsuarioEmpleado sin establecer la relación con Empleado
+			UsuarioEmpleado usuarioSuper = UsuarioEmpleado.builder()
+					.auth0Id("auth0|667910b301de4d750dd28a5e")
+					.username("superadministrador@gmail.com")
+					.build();
 
-			ImagenEmpleado imagenEmpleadoCocinero = ImagenEmpleado.builder().url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsa2xSPPay4GD7E3cthBMCcvPMADEjFufUWQ&s").build();
-			Domicilio domicilioEmpleadoCocinero = Domicilio.builder().calle("Sarmiento").numero(123).cp(5507).localidad(localidad1).build();
-			Empleado empleadoCocinero = Empleado.builder().nombre("Pepito").sucursal(sucursalChacras).rol(Rol.Cocinero).domicilio(domicilioEmpleadoCocinero).email("pepitococinas@gmail.com").apellido("Cocinas").imagen(imagenEmpleadoCocinero).telefono("2634666166").usuario(usuarioCocinero).fechaNacimiento(LocalDate.of(1992, 6, 12)).build();
-			empleadoRepository.save(empleadoCocinero);
+			// Guardar el UsuarioEmpleado primero
+			usuarioSuper = usuarioEmpleadoRepository.save(usuarioSuper);
 
-			ImagenEmpleado imagenEmpleadoDelivery = ImagenEmpleado.builder().url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsa2xSPPay4GD7E3cthBMCcvPMADEjFufUWQ&s").build();
-			Domicilio domicilioEmpleadoDelivery = Domicilio.builder().calle("Sarmiento").numero(123).cp(5507).localidad(localidad1).build();
-			Empleado empleadoDelivery = Empleado.builder().nombre("Jorge").sucursal(sucursalChacras).rol(Rol.Delivery).domicilio(domicilioEmpleadoDelivery).email("jorgedeliveres@gmail.com").apellido("Deliveres").imagen(imagenEmpleadoDelivery).telefono("2634636656").usuario(usuarioDelivery).fechaNacimiento(LocalDate.of(1993, 4, 11)).build();
-			empleadoRepository.save(empleadoDelivery);
+			// Crear el Empleado sin establecer la relación con UsuarioEmpleado
+			Empleado superadministrador = Empleado.builder()
+					.pedidos(new HashSet())
+					.nombre("Superadmin")
+					.apellido("1")
+					.telefono("2610000000")
+					.email("superadministrador@gmail.com")
+					.rol(Rol.SUPERADMIN)
+					.fechaNacimiento(LocalDate.now())
+					.imagen(null)
+					.sucursal(sucursalChacras)
+					.build();
+
+			// Guardar el Empleado
+			superadministrador = empleadoRepository.save(superadministrador);
+
+			// Establecer las relaciones bidireccionales
+			usuarioSuper.setEmpleado(superadministrador);
+			superadministrador.setUsuario(usuarioSuper);
+
+			// Guardar nuevamente las entidades actualizadas
+			usuarioEmpleadoRepository.save(usuarioSuper);
+			empleadoRepository.save(superadministrador);
 
 			// agregar pedido
 
-			Pedido pedido = Pedido.builder()
-					.domicilio(domicilioCliente1)
-					.estado(Estado.Entregado)
-					.formaPago(FormaPago.MercadoPago)
-					.fechaPedido(LocalDate.of(2024, 4, 18))
-					.horaEstimadaFinalizacion(LocalTime.of(12, 30))
-					.sucursal(sucursalChacras)
-					.tipoEnvio(TipoEnvio.Delivery)
-					.total(200d)
-					.totalCosto(180d)
-					.cliente(cliente1)
-					.empleado(empleadoCajero)
-					.build();
-			DetallePedido detallePedido1 = DetallePedido.builder().articulo(pizzaMuzarella).cantidad(1).subTotal(130d).pedido(pedido).build();
-			DetallePedido detallePedido2 = DetallePedido.builder().articulo(cocaCola).cantidad(1).subTotal(70d).pedido(pedido).build();
-			pedido.getDetallePedidos().add(detallePedido1);
-			pedido.getDetallePedidos().add(detallePedido2);
-
-			Factura factura = Factura.builder().fechaFacturacion(LocalDate.of(2024, 2, 13)).formaPago(FormaPago.MercadoPago).mpMerchantOrderId(1).mpPaymentId(1).mpPaymentType("mercado pago").mpPreferenceId("0001").totalVenta(2500d).pedido(pedido).build();
-
-			pedido.setFactura(factura);
-
-			pedidoRepository.save(pedido);
+//			Pedido pedido = Pedido.builder()
+//					.domicilio(domicilioCliente1)
+//					.estado(Estado.Entregado)
+//					.formaPago(FormaPago.MercadoPago)
+//					.fechaPedido(LocalDate.of(2024, 4, 18))
+//					.horaEstimadaFinalizacion(LocalTime.of(12, 30))
+//					.sucursal(sucursalChacras)
+//					.tipoEnvio(TipoEnvio.Delivery)
+//					.total(200d)
+//					.totalCosto(180d)
+//					.cliente(cliente1)
+//					.empleado(empleadoCajero)
+//					.build();
+//			DetallePedido detallePedido1 = DetallePedido.builder().articulo(pizzaMuzarella).cantidad(1).subTotal(130d).pedido(pedido).build();
+//			DetallePedido detallePedido2 = DetallePedido.builder().articulo(cocaCola).cantidad(1).subTotal(70d).pedido(pedido).build();
+//			pedido.getDetallePedidos().add(detallePedido1);
+//			pedido.getDetallePedidos().add(detallePedido2);
+//
+//			Factura factura = Factura.builder().fechaFacturacion(LocalDate.of(2024, 2, 13)).formaPago(FormaPago.MercadoPago).mpMerchantOrderId(1).mpPaymentId(1).mpPaymentType("mercado pago").mpPreferenceId("0001").totalVenta(2500d).pedido(pedido).build();
+//
+//			pedido.setFactura(factura);
+//
+//			pedidoRepository.save(pedido);
 
 		};
 	}

@@ -2,6 +2,7 @@ package com.example.buensaborback.business.service.Imp;
 
 import com.example.buensaborback.business.service.Base.BaseServiceImpl;
 import com.example.buensaborback.business.service.SucursalService;
+import com.example.buensaborback.domain.entities.Empresa;
 import com.example.buensaborback.domain.entities.Sucursal;
 import com.example.buensaborback.repositories.SucursalRepository;
 import org.springframework.stereotype.Service;
@@ -32,4 +33,12 @@ public class SucursalServiceImpl extends BaseServiceImpl<Sucursal, Long> impleme
     public List<Sucursal> obtenerSucursalesPorIdEmpresa(Long idEmpresa) {
         return sucursalRepository.findAllByEmpresaId(idEmpresa);
     }
+
+    @Override
+    public Empresa obtenerEmpresaPorSucursalId(Long idSucursal) {
+        Sucursal sucursal = sucursalRepository.findById(idSucursal).orElseThrow();
+        return sucursal.getEmpresa();
+    }
+
+
 }

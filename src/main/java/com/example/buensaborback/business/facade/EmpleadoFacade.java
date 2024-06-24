@@ -5,4 +5,5 @@ import com.example.buensaborback.domain.dtos.EmpleadoDto;
 import com.example.buensaborback.domain.entities.Empleado;
 
 public interface EmpleadoFacade extends BaseFacade<EmpleadoDto, Long> {
+    public EmpleadoDto findByEmail(String email) throws Exception;
 }

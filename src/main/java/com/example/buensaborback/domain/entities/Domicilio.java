@@ -32,12 +32,6 @@ public class Domicilio extends Base{
     @JsonBackReference(value = "domicilio_clientes")
     private Set<Cliente> clientes = new HashSet<>();
 
-    @OneToMany(mappedBy = "domicilio", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @ToString.Exclude
-    @Builder.Default
-    @JsonBackReference(value = "domicilio_empleados")
-    private Set<Empleado> empleados = new HashSet<>();
-
     @OneToOne(mappedBy = "domicilio")
     @ToString.Exclude
     @JsonBackReference(value = "domicilio_sucursal")
