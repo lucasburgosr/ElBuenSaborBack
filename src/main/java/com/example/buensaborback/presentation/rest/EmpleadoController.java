@@ -22,7 +22,7 @@ public class EmpleadoController extends BaseControllerImpl<EmpleadoDto, Long, Em
         this.empleadoFacade = empleadoFacade;
     }
 
-    @GetMapping("/filter")
+    @GetMapping("/mail")
     @PreAuthorize("hasAnyRole('CAJERO', 'COCINERO', 'ADMIN', 'SUPERADMIN', 'DELIVERY')")
     public ResponseEntity<?> findByEmail(@RequestParam String email) {
         try {
