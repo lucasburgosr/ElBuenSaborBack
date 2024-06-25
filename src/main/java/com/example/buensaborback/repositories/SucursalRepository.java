@@ -1,5 +1,6 @@
 package com.example.buensaborback.repositories;
 
+import com.example.buensaborback.domain.entities.Categoria;
 import com.example.buensaborback.domain.entities.Sucursal;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +16,9 @@ public interface SucursalRepository extends BaseRepository<Sucursal,Long> {
 
     @Query ("SELECT s FROM Sucursal s LEFT JOIN FETCH s.categorias WHERE s.id = :id")
     Sucursal findWithCategoriasById(@Param("id") Long id);
+
+    @Query("SELECT s.categorias FROM Sucursal s WHERE s.id = :sucursalId")
+    List<Categoria> findCategoriasBySucursalId(@Param("sucursalId") Long sucursalId);
 
     @Query("SELECT s FROM Sucursal s WHERE s.empresa.id = :empresaId")
     List<Sucursal> findAllByEmpresaId(@Param("empresaId") Long empresaId);

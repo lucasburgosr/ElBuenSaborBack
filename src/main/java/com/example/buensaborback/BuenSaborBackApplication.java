@@ -376,7 +376,7 @@ public class BuenSaborBackApplication {
 					.rol(Rol.COCINERO)
 					.fechaNacimiento(LocalDate.now())
 					.imagen(null)
-					.sucursal(sucursalChacras)
+					.sucursal(sucursalGodoyCruz)
 					.build();
 
 			// Guardar el Empleado
@@ -446,7 +446,7 @@ public class BuenSaborBackApplication {
 					.rol(Rol.DELIVERY)
 					.fechaNacimiento(LocalDate.now())
 					.imagen(null)
-					.sucursal(sucursalChacras)
+					.sucursal(sucursalGodoyCruz)
 					.build();
 
 			// Guardar el Empleado

@@ -1,6 +1,7 @@
 package com.example.buensaborback.presentation.rest;
 
 import com.example.buensaborback.business.facade.SucursalFacade;
+import com.example.buensaborback.domain.dtos.CategoriaDto;
 import com.example.buensaborback.domain.dtos.EmpresaLargeDto;
 import com.example.buensaborback.domain.dtos.SucursalDto;
 import com.example.buensaborback.presentation.rest.Base.BaseController;
@@ -31,6 +32,11 @@ public class SucursalController extends BaseControllerImpl<SucursalDto, Long, Su
     @GetMapping("/sucursal/{idSucursal}/empresa")
     public EmpresaLargeDto obtenerEmpresaPorSucursalId(@PathVariable Long idSucursal) {
         return sucursalFacade.obtenerEmpresaPorSucursalId(idSucursal);
+    }
+
+    @GetMapping("/{id}/categorias")
+    public List<CategoriaDto> getCategoriasBySucursalId(@PathVariable Long id) {
+        return facade.findCategoriasBySucursalId(id);
     }
 }
 

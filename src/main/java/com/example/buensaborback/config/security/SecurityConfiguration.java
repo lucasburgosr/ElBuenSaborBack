@@ -29,7 +29,7 @@ public class SecurityConfiguration {
 
     private final String audience = "http://elbuensaborapi";
     private final String issuer = "https://dev-ivcgfpif76bc7frn.us.auth0.com/";
-    private final String corsAllowedOrigins = "https://front-buen-sabor-ten.vercel.app/";
+    private final String corsAllowedOrigins = "http://localhost:5173/";
     boolean webSecurityDebug = true;
 
     @Autowired
