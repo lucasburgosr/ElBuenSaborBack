@@ -18,6 +18,5 @@ public class ArticuloManufacturadoDto extends ArticuloDto {
     private String preparacion;
     private Integer stock;
     private Double precioCosto;
-    protected List<ImagenArticulo> imagenesManufacturado;
     private Set<ArticuloManufacturadoDetalle> articuloManufacturadoDetalles = new HashSet<>();
 }

@@ -17,6 +17,6 @@ public class CategoriaDto extends BaseDto {
     private String denominacion;
     private Set<Categoria> subCategorias = new HashSet<>();
     private Categoria categoriaPadre;
-    private Set<Sucursal> sucursales = new HashSet<>();
+    //private Set<Sucursal> sucursales = new HashSet<>();
     private Set<Articulo> articulos = new HashSet<>();
 }
