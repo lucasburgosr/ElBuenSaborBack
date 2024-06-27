@@ -13,8 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -83,33 +81,34 @@ public class BuenSaborBackApplication {
 		logger.info("Me ejecutaste");
 		System.out.println("jdbc:h2:mem:testdb");
 		System.out.println("http://localhost:8080/h2-console/");
-		System.out.println("SELECT * FROM UNIDAD_MEDIDA ;\n" +
-				"SELECT * FROM PAIS ;\n" +
-				"SELECT * FROM PROVINCIA ;\n" +
-				"SELECT * FROM LOCALIDAD ;\n" +
-				"SELECT * FROM DOMICILIO ;\n" +
-				"SELECT * FROM EMPRESA ;\n" +
-				"SELECT * FROM USUARIO_EMPLEADO ;\n" +
-				"SELECT * FROM EMPLEADO ;\n" +
-				"SELECT * FROM IMAGEN_EMPLEADO ;\n" +
-				"SELECT * FROM SUCURSAL ;\n" +
-				"SELECT * FROM SUCURSAL_PROMOCION ;\n" +
-				"SELECT * FROM SUCURSAL_CATEGORIA ;\n" +
-				"SELECT * FROM CATEGORIA ;\n" +
-				"SELECT * FROM IMAGEN_ARTICULO ;\n" +
-				"SELECT * FROM ARTICULO_INSUMO;\n" +
-				"SELECT * FROM ARTICULO_MANUFACTURADO ;\n" +
-				"SELECT * FROM ARTICULO_MANUFACTURADO_DETALLE;\n" +
-				"SELECT * FROM IMAGEN_PROMOCION ;\n" +
-				"SELECT * FROM PROMOCION ;\n" +
-				"SELECT * FROM PROMOCION_DETALLE ;\n" +
-				"SELECT * FROM USUARIO_CLIENTE ;\n" +
-				"SELECT * FROM CLIENTE;\n" +
-				"SELECT * FROM IMAGEN_CLIENTE ;\n" +
-				"SELECT * FROM CLIENTE_DOMICILIO ;\n" +
-				"SELECT * FROM PEDIDO ;\n" +
-				"SELECT * FROM DETALLE_PEDIDO ;\n" +
-				"SELECT * FROM FACTURA ;");
+		System.out.println("""
+                SELECT * FROM UNIDAD_MEDIDA ;
+                SELECT * FROM PAIS ;
+                SELECT * FROM PROVINCIA ;
+                SELECT * FROM LOCALIDAD ;
+                SELECT * FROM DOMICILIO ;
+                SELECT * FROM EMPRESA ;
+                SELECT * FROM USUARIO_EMPLEADO ;
+                SELECT * FROM EMPLEADO ;
+                SELECT * FROM IMAGEN_EMPLEADO ;
+                SELECT * FROM SUCURSAL ;
+                SELECT * FROM SUCURSAL_PROMOCION ;
+                SELECT * FROM SUCURSAL_CATEGORIA ;
+                SELECT * FROM CATEGORIA ;
+                SELECT * FROM IMAGEN_ARTICULO ;
+                SELECT * FROM ARTICULO_INSUMO;
+                SELECT * FROM ARTICULO_MANUFACTURADO ;
+                SELECT * FROM ARTICULO_MANUFACTURADO_DETALLE;
+                SELECT * FROM IMAGEN_PROMOCION ;
+                SELECT * FROM PROMOCION ;
+                SELECT * FROM PROMOCION_DETALLE ;
+                SELECT * FROM USUARIO_CLIENTE ;
+                SELECT * FROM CLIENTE;
+                SELECT * FROM IMAGEN_CLIENTE ;
+                SELECT * FROM CLIENTE_DOMICILIO ;
+                SELECT * FROM PEDIDO ;
+                SELECT * FROM DETALLE_PEDIDO ;
+                SELECT * FROM FACTURA ;""");
 		System.out.println("http://localhost:8080/swagger-ui/index.html");
 	}
 

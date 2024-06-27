@@ -1,31 +1,25 @@
 package com.example.buensaborback.utils;
 
-
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
 @Configuration
 public class CloudinaryConfiguration {
 
-
+    // Inyecta los valores de configuración desde el archivo de properties
     @Value("${cloudinary.cloud_name}")
     private String cloudName;
-
 
     @Value("${cloudinary.api_key}")
     private String apiKey;
 
-
     @Value("${cloudinary.api_secret}")
     private String apiSecret;
 
-
+    // Define un bean de Cloudinary que se configura con los valores inyectados
     @Bean
     public Cloudinary cloudinary() {
         return new Cloudinary(ObjectUtils.asMap(

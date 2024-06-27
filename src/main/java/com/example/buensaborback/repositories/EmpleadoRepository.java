@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface EmpleadoRepository extends BaseRepository<Empleado,Long> {
 
+    // Consulta para obtener un empleado basado en su email
     @Query("SELECT e FROM Empleado e WHERE e.email = :email")
     Empleado findByEmail(@Param("email") String email);
-    Page<Empleado> findBySucursal_Id(Long sucursalId, Pageable pageable);
 }

@@ -7,5 +7,6 @@ import com.example.buensaborback.domain.dtos.PromocionDto;
 import java.util.Set;
 
 public interface PromocionFacade extends BaseFacade<PromocionDto, Long> {
+    //Encuentra todas las promociones asociadas a una sucursal específica.
     public Set<PromocionDto> findBySucursalId(Long sucursalId);
 }
