@@ -433,7 +433,7 @@ public class BuenSaborBackApplication {
 			Empleado cajero = Empleado.builder()
 					.pedidos(new HashSet())
 					.nombre("Cajero")
-					.apellido("1")
+					.apellido("ApellidoCajero")
 					.telefono("2610000000")
 					.email("cajero@gmail.com")
 					.rol(Rol.CAJERO)
@@ -468,7 +468,7 @@ public class BuenSaborBackApplication {
 			Empleado cocinero = Empleado.builder()
 					.pedidos(new HashSet())
 					.nombre("Cocinero")
-					.apellido("1")
+					.apellido("ApellidoCocinero")
 					.telefono("2610000000")
 					.email("cocinero@gmail.com")
 					.rol(Rol.COCINERO)
@@ -538,7 +538,7 @@ public class BuenSaborBackApplication {
 			Empleado delivery = Empleado.builder()
 					.pedidos(new HashSet())
 					.nombre("Delivery")
-					.apellido("1")
+					.apellido("ApellidoDeli")
 					.telefono("2610000000")
 					.email("delivery@gmail.com")
 					.rol(Rol.DELIVERY)
@@ -573,7 +573,7 @@ public class BuenSaborBackApplication {
 			Empleado superadministrador = Empleado.builder()
 					.pedidos(new HashSet())
 					.nombre("Superadmin")
-					.apellido("1")
+					.apellido("ApellidoAdmin")
 					.telefono("2610000000")
 					.email("superadministrador@gmail.com")
 					.rol(Rol.SUPERADMIN)
@@ -623,8 +623,24 @@ public class BuenSaborBackApplication {
 					.build();
 			pedidoRepository.save(pedido);
 
+			Pedido pedido2 = Pedido.builder().domicilio(domicilioSanMartin)
+					.estado(Estado.Preparacion)
+					.formaPago(FormaPago.Efectivo)
+					.fechaPedido(LocalDate.of(2024, 6, 28))
+					.horaEstimadaFinalizacion(LocalTime.of(17, 30))
+					.sucursal(sucursalDorrego)
+					.tipoEnvio(TipoEnvio.TakeAway)
+					.total(2000d)
+					.totalCosto(1500d)
+					.cliente(cliente1)
+					.empleado(cocinero)
+					.build();
+			pedidoRepository.save(pedido2);
+
 			sucursalChacras.getPedidos().add(pedido);
+			sucursalDorrego.getPedidos().add(pedido2);
 			sucursalRepository.save(sucursalChacras);
+			sucursalRepository.save(sucursalDorrego);
 
 //			Factura factura = Factura.builder().fechaFacturacion(LocalDate.of(2024, 2, 13)).formaPago(FormaPago.MercadoPago).mpMerchantOrderId(1).mpPaymentId(1).mpPaymentType("mercado pago").mpPreferenceId("0001").totalVenta(2500d).pedido(pedido).build();
 //

@@ -48,11 +48,11 @@ public abstract class BaseControllerImpl<D extends BaseDto, ID extends Serializa
         return ResponseEntity.ok(null);
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<D> update(@RequestBody D entity, @PathVariable ID id) throws Exception {
-//        logger.info("INICIO EDIT {}", entity.getClass());
-//        return ResponseEntity.ok(facade.update(entity, id));
-//    }
+   @PutMapping("/{id}")
+   public ResponseEntity<D> update(@RequestBody D entity, @PathVariable ID id) throws Exception {
+        logger.info("INICIO EDIT {}", entity.getClass());
+        return ResponseEntity.ok(facade.update(entity, id));
+    }
 
 //    @DeleteMapping("/{id}")
 //    public ResponseEntity<?> deleteById(@PathVariable ID id) throws Exception {
