@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,12 +28,10 @@ public class BuenSaborBackApplication {
 // Es por ello que deben crear el paquete reositorio
 
 // Ejemplo  @Autowired
-//	private ClienteRepository clienteRepository;
 
 	private static final Logger logger = LoggerFactory.getLogger(BuenSaborBackApplication.class);
 
-	@Autowired
-	private ClienteRepository clienteRepository;
+
 
 	@Autowired
 	private PaisRepository paisRepository;
@@ -64,6 +63,7 @@ public class BuenSaborBackApplication {
 	@Autowired
 	private  PedidoRepository pedidoRepository;
 
+
 	@Autowired
 	private EmpleadoRepository empleadoRepository;
 
@@ -72,6 +72,10 @@ public class BuenSaborBackApplication {
 
 	@Autowired
 	private UsuarioEmpleadoRepository usuarioEmpleadoRepository;
+
+	@Autowired
+	private ClienteRepository clienteRepository;
+
 
 
 	public static void main(String[] args) {
@@ -590,32 +594,43 @@ public class BuenSaborBackApplication {
 			empleadoRepository.save(superadministrador);
 
 
+			// Crear un cliente
 
-			// agregar pedido
+			Cliente cliente1 = Cliente.builder()
+					.rol(Rol.CLIENTE)
+					.nombre("JuanX")
+					.apellido("Filippini")
+					.fechaNacimiento(LocalDate.now())
+					.domicilios(new HashSet<>())
+					.pedidos(new HashSet<>())
+					.email("juanxFilippini@gmail.com")
+					.eliminado(false)
+					.telefono("2616039271")
+					.build();
 
-//			Pedido pedido = Pedido.builder()
-//					.domicilio(domicilioCliente1)
-//					.estado(Estado.Entregado)
-//					.formaPago(FormaPago.MercadoPago)
-//					.fechaPedido(LocalDate.of(2024, 4, 18))
-//					.horaEstimadaFinalizacion(LocalTime.of(12, 30))
-//					.sucursal(sucursalChacras)
-//					.tipoEnvio(TipoEnvio.Delivery)
-//					.total(200d)
-//					.totalCosto(180d)
-//					.cliente(cliente1)
-//					.empleado(empleadoCajero)
-//					.build();
-//			DetallePedido detallePedido1 = DetallePedido.builder().articulo(pizzaMuzarella).cantidad(1).subTotal(130d).pedido(pedido).build();
-//			DetallePedido detallePedido2 = DetallePedido.builder().articulo(cocaCola).cantidad(1).subTotal(70d).pedido(pedido).build();
-//			pedido.getDetallePedidos().add(detallePedido1);
-//			pedido.getDetallePedidos().add(detallePedido2);
-//
+			clienteRepository.save(cliente1);
+			Pedido pedido = Pedido.builder().domicilio(domicilioDorrego)
+					.estado(Estado.Entregado)
+					.formaPago(FormaPago.MercadoPago)
+					.fechaPedido(LocalDate.of(2024, 4, 18))
+					.horaEstimadaFinalizacion(LocalTime.of(12, 30))
+					.sucursal(sucursalChacras)
+					.tipoEnvio(TipoEnvio.Delivery)
+					.total(200d)
+					.totalCosto(180d)
+					.cliente(cliente1)
+					.empleado(cajero)
+					.build();
+			pedidoRepository.save(pedido);
+
+			sucursalChacras.getPedidos().add(pedido);
+			sucursalRepository.save(sucursalChacras);
+
 //			Factura factura = Factura.builder().fechaFacturacion(LocalDate.of(2024, 2, 13)).formaPago(FormaPago.MercadoPago).mpMerchantOrderId(1).mpPaymentId(1).mpPaymentType("mercado pago").mpPreferenceId("0001").totalVenta(2500d).pedido(pedido).build();
 //
 //			pedido.setFactura(factura);
 //
-//			pedidoRepository.save(pedido);
+
 
 		};
 	}

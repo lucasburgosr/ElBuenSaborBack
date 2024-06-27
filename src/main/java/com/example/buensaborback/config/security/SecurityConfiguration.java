@@ -43,6 +43,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .anyRequest().permitAll()
+
                 )
 
                 .oauth2ResourceServer(oauth2ResourceServer ->
