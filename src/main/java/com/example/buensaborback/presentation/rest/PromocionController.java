@@ -6,6 +6,8 @@ import com.example.buensaborback.presentation.rest.Base.BaseController;
 import com.example.buensaborback.presentation.rest.Base.BaseControllerImpl;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping(path = "api/promociones")
@@ -16,6 +18,11 @@ public class PromocionController extends BaseControllerImpl<PromocionDto, Long, 
     public PromocionController(PromocionFacade promocionFacade) {
         super(promocionFacade);
         this.promocionFacade = promocionFacade;
+    }
+
+    @GetMapping("/{sucursalId}/sucursales")
+    public Set<PromocionDto> getPromocionesBySucursalId(Long sucursalId) {
+        return facade.findBySucursalId(sucursalId);
     }
 }
 

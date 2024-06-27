@@ -6,6 +6,8 @@ import com.example.buensaborback.domain.entities.Promocion;
 import com.example.buensaborback.repositories.PromocionRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 
 @Service("promocionServiceImpl")
 public class PromocionServiceImpl extends BaseServiceImpl<Promocion, Long> implements PromocionService {
@@ -14,5 +16,11 @@ public class PromocionServiceImpl extends BaseServiceImpl<Promocion, Long> imple
     public PromocionServiceImpl(PromocionRepository promocionRepository) {
         super(promocionRepository);
         this.promocionRepository = promocionRepository;
+    }
+
+    @Override
+    public Set<Promocion> findBySucursalId(Long id) {
+        Set<Promocion> promociones = promocionRepository.findBySucursalId(id);
+        return promociones;
     }
 }
