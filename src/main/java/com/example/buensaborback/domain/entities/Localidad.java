@@ -22,11 +22,14 @@ public class Localidad extends Base{
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "provincia_id")
+// Declaración del atributo privado 'provincia' de tipo 'Provincia'
     private Provincia provincia;
 
     @OneToMany(mappedBy = "localidad")
     @ToString.Exclude
     @Builder.Default
     @JsonBackReference(value = "localidad_domicilios")
+// Declaración del atributo privado 'domicilios' de tipo 'Set<Domicilio>', inicializado como un nuevo HashSet
     private Set<Domicilio> domicilios = new HashSet<>();
+
 }

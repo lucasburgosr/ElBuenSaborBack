@@ -34,15 +34,19 @@ public class Promocion extends Base {
     @OneToMany(mappedBy = "promocion", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
     @NotAudited
+// Declaración del atributo privado 'imagenes' de tipo 'Set<ImagenPromocion>', inicializado como un nuevo HashSet
     private Set<ImagenPromocion> imagenes = new HashSet<>();
 
     @ManyToMany(mappedBy = "promociones")
     @ToString.Exclude
     @JsonIgnoreProperties({"nombre", "domicilio", "promociones"})
     @Builder.Default
+// Declaración del atributo privado 'sucursales' de tipo 'Set<Sucursal>', inicializado como un nuevo HashSet
     private Set<Sucursal> sucursales = new HashSet<>();
 
     @OneToMany(mappedBy = "promocion", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @Builder.Default
+// Declaración del atributo privado 'promocionDetalles' de tipo 'Set<PromocionDetalle>', inicializado como un nuevo HashSet
     private Set<PromocionDetalle> promocionDetalles = new HashSet<>();
+
 }

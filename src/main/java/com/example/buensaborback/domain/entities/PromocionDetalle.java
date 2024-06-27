@@ -24,11 +24,14 @@ public class PromocionDetalle extends Base {
     @ManyToOne
     @JoinColumn(name = "articulo_id")
     @JsonIgnoreProperties({"imagenes", "categoria", "articuloManufacturadoDetalles"})
+// Declaración del atributo privado 'articulo' de tipo 'Articulo'
     private Articulo articulo;
 
     @ManyToOne
     @ToString.Exclude
     @JoinColumn(name = "promocion_id")
     @JsonBackReference(value = "detallepedido_pedido")
+// Declaración del atributo privado 'promocion' de tipo 'Promocion'
     private Promocion promocion;
+
 }

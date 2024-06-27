@@ -35,32 +35,40 @@ public class ArticuloManufacturado extends Articulo {
     @NotAudited
     protected List<ImagenArticulo> imagenesManufacturado;
 
+    // Relación uno a muchos con la entidad ArticuloManufacturadoDetalle
     @OneToMany(mappedBy = "articuloManufacturado", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @Builder.Default
     private Set<ArticuloManufacturadoDetalle> articuloManufacturadoDetalles = new HashSet<>();
 
 
+
+    // Método que redondea un valor doble a dos decimales usando RoundingMode.HALF_UP
     public static double redondear(double value) {
         BigDecimal bd = BigDecimal.valueOf(value);
         bd = bd.setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
 
+
+    // Se calculan los stocks disponibles de cada ingrediente por la cantidad que se vaya a usar de cada uno
     public Integer stockCalculado() throws RuntimeException, InterruptedException {
 
-        // Se calculan los stocks disponibles de cada ingrediente por la cantidad que se vaya a usar de cada uno
+
+        // Se imprime información sobre cada detalle manufacturado y su stock actual
         List<Integer> stocksPorCantidad = articuloManufacturadoDetalles.stream().map(
-                detalle -> (int) (detalle.getArticuloInsumo().getStockActual() / detalle.getCantidad()
-                )
+                detalle -> (int) (detalle.getArticuloInsumo().getStockActual() / detalle.getCantidad())
         ).toList();
+
+        // Se busca el mínimo stock disponible
         articuloManufacturadoDetalles.stream().forEach(
                 detalle -> System.out.println("Detalle: " + detalle.getCantidad() + " unidades de " + detalle.getArticuloInsumo().getDenominacion() + ", con stock " + detalle.getArticuloInsumo().getStockActual())
         );
 
-        // Se busca el mínimo stock disponible
+        // Si no hay stock, se lanza una excepción
         Integer stockMinimo = stocksPorCantidad.stream().reduce(Integer.MAX_VALUE, (a, b) -> a < b ? a : b);
 
-        // Si no hay stock, se lanza una excepción
+
+        // Método que calcula el stock mínimo disponible basado en los detalles manufacturados
         if (stockMinimo < 0) {
             return 0;
         } else {
@@ -68,12 +76,17 @@ public class ArticuloManufacturado extends Articulo {
         }
     }
 
+
+
+
     public Double precioCostoCalculado() {
 
         // Se calcula el costo de cada ingrediente por la cantidad que se vaya a usar de cada uno
         List<Double> costos = articuloManufacturadoDetalles.stream().map(
                 detalle -> (detalle.getArticuloInsumo().getPrecioCompra() * detalle.getCantidad())
         ).toList();
+
+        // Se imprime información sobre cada detalle manufacturado y su costo
         articuloManufacturadoDetalles.stream().forEach(
                 detalle -> System.out.println(detalle.getCantidad() + " unidades de " + detalle.getArticuloInsumo().getDenominacion() + " con costo unitario de $" + detalle.getArticuloInsumo().getPrecioCompra() + " = " + detalle.getArticuloInsumo().getPrecioCompra() * detalle.getCantidad())
         );
@@ -83,4 +96,9 @@ public class ArticuloManufacturado extends Articulo {
 
         return costo;
     }
+
+// Método que calcula el costo total basado en los detalles manufacturados
+// Redondea el costo total a dos decimales y lo retorna
+
+}
 }

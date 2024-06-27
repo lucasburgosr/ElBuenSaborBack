@@ -25,5 +25,7 @@ public class Pais extends Base{
     @ToString.Exclude
     @Builder.Default
     @JsonBackReference(value = "pais_provincias")
+// Declaración del atributo privado 'provincias' de tipo 'Set<Provincia>', inicializado como un nuevo HashSet
     private Set<Provincia> provincias = new HashSet<>();
+
 }

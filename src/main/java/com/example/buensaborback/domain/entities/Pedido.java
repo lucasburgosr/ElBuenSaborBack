@@ -34,28 +34,35 @@ public class Pedido extends Base{
 
     @ManyToOne
     @JoinColumn(name = "domicilio_id")
+// Declaración del atributo privado 'domicilio' de tipo 'Domicilio'
     private Domicilio domicilio;
 
     @ManyToOne
     @JoinColumn(name = "sucursal_id")
+// Declaración del atributo privado 'sucursal' de tipo 'Sucursal'
     private Sucursal sucursal;
 
     @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
     @JsonBackReference(value = "pedido_factura")
+// Declaración del atributo privado 'factura' de tipo 'Factura'
     private Factura factura;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     @JsonIgnoreProperties({"pedidos", "domicilios", "usuario", "imagen"})
+// Declaración del atributo privado 'cliente' de tipo 'Cliente'
     private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "empleado_id")
     @JsonIgnoreProperties({"pedidos", "domicilios", "usuario", "imagen", "rol"})
+// Declaración del atributo privado 'empleado' de tipo 'Empleado'
     private Empleado empleado;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
+// Declaración del atributo privado 'detallePedidos' de tipo 'Set<DetallePedido>', inicializado como un nuevo HashSet
     private Set<DetallePedido> detallePedidos = new HashSet<>();
+
 }

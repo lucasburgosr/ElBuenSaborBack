@@ -30,10 +30,14 @@ public class Cliente extends Base {
     private String email;
     private LocalDate fechaNacimiento;
 
+    // Relación uno a muchos con la entidad Pedido
+
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @Builder.Default
     @JsonIgnoreProperties("cliente")
     private Set<Pedido> pedidos = new HashSet<>();
+
+    // Relación muchos a muchos con la entidad Domicilio
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "Cliente_domicilio",
@@ -42,14 +46,19 @@ public class Cliente extends Base {
     @Builder.Default
     private Set<Domicilio> domicilios = new HashSet<>();
 
+    // Relación uno a uno con la entidad UsuarioCliente
+
     @OneToOne
     @ToString.Exclude
     @JoinColumn(name = "usuario_id")
     @JsonBackReference(value = "cliente_usuario")
     private UsuarioCliente usuario;
-    
+
+    // Relación uno a uno con la entidad ImagenCliente
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "imagen_id")
     @NotAudited
     private ImagenCliente imagen;
 }
+

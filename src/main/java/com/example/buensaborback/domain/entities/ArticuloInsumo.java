@@ -26,6 +26,7 @@ public class ArticuloInsumo extends Articulo {
     private Integer stockMaximo;
     private Boolean esParaElaborar;
 
+    // Relación uno a muchos con la entidad ArticuloManufacturadoDetalle
     @OneToMany(mappedBy = "articuloInsumo", fetch = FetchType.LAZY)
     @ToString.Exclude
     @Builder.Default

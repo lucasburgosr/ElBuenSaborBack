@@ -35,29 +35,33 @@ public class SecurityConfiguration {
     @Autowired
     private JwtLoggingFilter jwtLoggingFilter;
 
+    // Configuración del filtro de seguridad HTTP
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
-                .cors(withDefaults())
+                .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF
+                .cors(withDefaults()) // Configurar CORS con valores predeterminados
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .anyRequest().permitAll()
+                                .anyRequest().permitAll() // Permitir todas las solicitudes HTTP
 
                 )
-
                 .oauth2ResourceServer(oauth2ResourceServer ->
                         oauth2ResourceServer
                                 .jwt(jwt ->
                                         jwt
-                                                .decoder(jwtDecoder())
-                                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
+                                                .decoder(jwtDecoder()) // Configurar el decodificador JWT
+                                                .jwtAuthenticationConverter(jwtAuthenticationConverter()) // Configurar el convertidor de autenticación JWT
                                 )
                 );
-                http.addFilterBefore(jwtLoggingFilter, BearerTokenAuthenticationFilter.class);
+
+        // Agregar el filtro JwtLoggingFilter antes del BearerTokenAuthenticationFilter
+        http.addFilterBefore(jwtLoggingFilter, BearerTokenAuthenticationFilter.class);
+
         return http.build();
     }
 
+    // Configuración de origen CORS para permitir ciertos orígenes y métodos
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -72,6 +76,7 @@ public class SecurityConfiguration {
         return source;
     }
 
+    // Configuración del decodificador JWT que valida el emisor y la audiencia
     @Bean
     JwtDecoder jwtDecoder() {
         NimbusJwtDecoder jwtDecoder = JwtDecoders.fromOidcIssuerLocation(issuer);
@@ -82,6 +87,7 @@ public class SecurityConfiguration {
         return jwtDecoder;
     }
 
+    // Configuración del convertidor de autenticación JWT para extraer roles/autoridades del token
     @Bean
     JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
@@ -92,6 +98,7 @@ public class SecurityConfiguration {
         return jwtConverter;
     }
 
+    // Configuración personalizada de seguridad web para habilitar o deshabilitar la depuración
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.debug(webSecurityDebug);

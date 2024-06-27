@@ -15,16 +15,18 @@ import org.hibernate.envers.Audited;
 @ToString
 @Builder
 @Audited
-public class DetallePedido extends Base{
+public class DetallePedido extends Base {
 
     private Integer cantidad;
     private Double subTotal;
 
+    // Campo que representa la relación con la entidad "Articulo"
     @ManyToOne
     @JoinColumn(name = "articulo_id")
     @JsonIgnoreProperties({"imagenes", "unidadMedida", "categoria", "articuloManufacturadoDetalles"})
     private Articulo articulo;
 
+    // Campo que representa la relación con la entidad "Pedido"
     @ManyToOne
     @ToString.Exclude
     @JoinColumn(name = "pedido_id")
